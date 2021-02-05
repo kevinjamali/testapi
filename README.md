@@ -1,5 +1,5 @@
 # Test Api
-This is just a test api in php
+This is just a test api has been written in php
 
 #Time Zone
 Please use standard timezone from this list: https://www.php.net/manual/en/timezones.php
