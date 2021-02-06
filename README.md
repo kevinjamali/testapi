@@ -14,7 +14,7 @@ Please use standard timezone from this list: https://www.php.net/manual/en/timez
 Kevin Jamali
 
 ## Screenshot
-![Json result](tree/main/images/testapi_json.png)
+![Json result](https://github.com/kevinjamali/testapi/blob/main/images/tetsapi-json.png)
 
 
 ## License
