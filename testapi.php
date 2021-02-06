@@ -40,13 +40,22 @@ if (isset ( $_POST ["convertparam"] )) {
 
 $myJSON = json_encode ( finder ( $from, $to, $type, $convertparam ) );
 echo $myJSON;
+
+/* The finder function get 4 parameters and calculate days , weekdays and complete between $from and $to
+$type and $convertparam are optional
+if both of them has a valid value the $convertparam parameter will be converted to $type */
 function finder($from, $to, $type, $convertparam) {
 	$no_weekdays = 0;
 	$no_days = 0;
 	$no_complete_weeks = 0;
-	$functionTimezone = new DateTimeZone ( 'Australia/Adelaide' );
+	$typevalid = TRUE;
+	
+	//find the server time zone and use it for converting or calculating or switch to a specific time zone for example 'Australia/Adelaide'
+	$date = new DateTime();
+	$functionTimezone = $date->getTimezone();
+	//$functionTimezone = new DateTimeZone ( 'Australia/Adelaide' );
 
-	$acceptable_types = array (
+	$acceptable_types = array (//define acceptable types
 			"seconds",
 			"minutes",
 			"hours",
@@ -56,6 +65,7 @@ function finder($from, $to, $type, $convertparam) {
 	// validation the data
 	if ((! in_array ( $type, $acceptable_types )) and $type !== null) {
 		$type = "Please use 'seconds', 'minutes', 'hours' or 'years' ";
+		$typevalid = FALSE;
 	}
 
 	if (strtotime ( $from ) !== FALSE and $from !== null) {
@@ -87,11 +97,11 @@ function finder($from, $to, $type, $convertparam) {
 			$start_date = $from_date;
 		}
 
-		$yearsdiff = floor ( ($end_date - $start_date) / 31536000 );
+		//$yearsdiff = floor ( ($end_date - $start_date) / 31536000 );
 
 		$no_days = floor ( ($end_date - $start_date) / 86400 );
 		$no_days_real = $no_days; // store it in another name for other parts
-		if ($convertparam == "days" and $type != null) {
+		if ($convertparam == "days" and $type != null and $typevalid != FALSE) {
 
 			$no_days = convertto ( $no_days, $type );
 		}
@@ -111,10 +121,11 @@ function finder($from, $to, $type, $convertparam) {
 		}
 		$no_complete_weeks = floor ( $no_days_remained / 7 ); // Complete weeks
 
-		if ($convertparam == "completeweeks" and $type != null) {
+		if ($convertparam == "completeweeks" and $type != null and $typevalid != FALSE) {
 
 			$no_complete_weeks = convertto ( $no_complete_weeks * 7, $type );
 		}
+		
 
 		$weeks_difference = floor ( $no_days_real / 7 );
 
@@ -134,7 +145,7 @@ function finder($from, $to, $type, $convertparam) {
 
 		$no_weekdays = ($weeks_difference * 5) + $no_days_remained;
 
-		if ($convertparam == "weekdays" and $type != null) {
+		if ($convertparam == "weekdays" and $type != null and $typevalid != FALSE) {
 			$no_weekdays = convertto ( $no_weekdays, $type );
 		}
 	}
@@ -149,6 +160,8 @@ function finder($from, $to, $type, $convertparam) {
 			"completeweeks" => $no_complete_weeks
 	);
 }
+
+//convert results to seconds, minutes, hours and years
 function convertto($thedays, $thetype) {
 	if ($thetype != null) {
 		switch ($thetype) {
