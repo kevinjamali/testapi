@@ -1,8 +1,7 @@
 # Test Api
 This is just a test api has been written in php
 
-#Time Zone
-Please use standard timezone from this list: https://www.php.net/manual/en/timezones.php
+Time Zone: Please use standard timezone from this list: https://www.php.net/manual/en/timezones.php at the end of datetime of 'from' and 'to'
 
 ## License
 
