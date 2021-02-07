@@ -1,7 +1,7 @@
 <?php
 use PhpParser\Node\Stmt\Switch_;
 
-header ( "Content-Type: application/json; charset=UTF-8" );
+//header ( "Content-Type: application/json; charset=UTF-8" );
 
 $from = null;
 $to = null;
@@ -41,21 +41,23 @@ if (isset ( $_POST ["convertparam"] )) {
 $myJSON = json_encode ( finder ( $from, $to, $type, $convertparam ) );
 echo $myJSON;
 
-/* The finder function get 4 parameters and calculate days , weekdays and complete between $from and $to
-$type and $convertparam are optional
-if both of them has a valid value the $convertparam parameter will be converted to $type */
+/*
+ * The finder function get 4 parameters and calculate days , weekdays and complete between $from and $to
+ * $type and $convertparam are optional
+ * if both of them has a valid value the $convertparam parameter will be converted to $type
+ */
 function finder($from, $to, $type, $convertparam) {
 	$no_weekdays = 0;
 	$no_days = 0;
 	$no_complete_weeks = 0;
 	$typevalid = TRUE;
-	
-	//find the server time zone and use it for converting or calculating or switch to a specific time zone for example 'Australia/Adelaide'
-	$date = new DateTime();
-	$functionTimezone = $date->getTimezone();
-	//$functionTimezone = new DateTimeZone ( 'Australia/Adelaide' );
 
-	$acceptable_types = array (//define acceptable types
+	// find the server time zone and use it for converting or calculating or switch to a specific time zone for example 'Australia/Adelaide'
+	$date = new DateTime ();
+	$functionTimezone = $date->getTimezone ();
+	// $functionTimezone = new DateTimeZone ( 'Australia/Adelaide' );
+
+	$acceptable_types = array ( // define acceptable types
 			"seconds",
 			"minutes",
 			"hours",
@@ -97,56 +99,65 @@ function finder($from, $to, $type, $convertparam) {
 			$start_date = $from_date;
 		}
 
-		//$yearsdiff = floor ( ($end_date - $start_date) / 31536000 );
+		// $yearsdiff = floor ( ($end_date - $start_date) / 31536000 );
 
-		$no_days = floor ( ($end_date - $start_date) / 86400 );
+		$no_days = floor ( ($end_date - $start_date) / 86400 ) + 1;
 		$no_days_real = $no_days; // store it in another name for other parts
+		$no_days_remained = $no_days_real; // store it for other calculations
+		                                   // $datediff=date_diff(date_format($to, 'Y-m-d ' ), date_format($from, 'Y-m-d'));
+		$start_date_day_number = date ( "N", $start_date ); // Monday 1 , Sunday 7
+		$first_day = date ( "w", $start_date );
+		$end_date_day_number = date ( "N", $end_date );
+
+		// calculate number of complete weeks
+		if ($no_days_real > 7) {
+			// If ($end_date_day_number != 7 and $end_date_day_number != 1) {
+			If ($end_date_day_number != 7) {
+				$no_days_remained = $no_days_remained - $end_date_day_number;
+			}
+
+			if ($start_date_day_number != 7 and $start_date_day_number != 1) {
+				// if ($start_date_day_number != 1) {
+				$no_days_remained = $no_days_remained - (7 - $start_date_day_number);
+			}
+
+			$no_complete_weeks = floor ( $no_days_remained / 7 ); // Complete weeks
+		} else {
+			$no_complete_weeks = 0;
+		}
+
+		// calculate weekdays
+		$no_days_remained = 0;
+
+		if (date ( "W", $start_date ) == date ( "W", $end_date ) and date ( "Y", $start_date ) == date ( "Y", $end_date )) {
+			$no_weekdays = $end_date_day_number - $start_date_day_number + 1;
+			if ($no_weekdays > 5) {
+				$no_weekdays = 5;
+			}
+		} else {
+			If ($end_date_day_number != 7) {
+				$no_days_remained = $no_days_remained + $end_date_day_number; // if it is n
+			}
+			if ($start_date_day_number != 7 and $start_date_day_number != 1) {
+				$no_days_remained = $no_days_remained + (6 - $start_date_day_number);
+			}
+
+			$no_weekdays = abs ( ($no_complete_weeks * 5) + $no_days_remained );
+		}
+
+		// check parameter 3 and 4 and convert them id it is needed
+
 		if ($convertparam == "days" and $type != null and $typevalid != FALSE) {
 
 			$no_days = convertto ( $no_days, $type );
 		}
 
-		// Monday 1 , Sunday 7
-		$start_date_day_number = date ( "N", $start_date );
-		$end_date_day_number = date ( "N", $end_date );
-
-		$no_days_remained = $no_days_real; // store it for other parts
-
-		If ($end_date_day_number != 7 and $end_date_day_number != 1) {
-			$no_days_remained = $no_days_remained - $end_date_day_number;
+		if ($convertparam == "weekdays" and $type != null and $typevalid != FALSE) {
+			$no_weekdays = convertto ( $no_weekdays, $type );
 		}
-
-		if ($start_date_day_number != 7 and $start_date_day_number != 1) {
-			$no_days_remained = $no_days_remained - (6 - $start_date_day_number);
-		}
-		$no_complete_weeks = floor ( $no_days_remained / 7 ); // Complete weeks
-
 		if ($convertparam == "completeweeks" and $type != null and $typevalid != FALSE) {
 
 			$no_complete_weeks = convertto ( $no_complete_weeks * 7, $type );
-		}
-		
-
-		$weeks_difference = floor ( $no_days_real / 7 );
-
-		$first_day = date ( "w", $start_date );
-		$no_days_remained = floor ( $no_days_real % 7 );
-		$odd_days = $first_day + $no_days_remained;
-
-		// Do we have a Saturday or Sunday in the remainder?
-
-		if ($odd_days > 7) { // Sunday
-			$no_days_remained --;
-		}
-
-		if ($odd_days > 6) { // Saturday
-			$no_days_remained --;
-		}
-
-		$no_weekdays = ($weeks_difference * 5) + $no_days_remained;
-
-		if ($convertparam == "weekdays" and $type != null and $typevalid != FALSE) {
-			$no_weekdays = convertto ( $no_weekdays, $type );
 		}
 	}
 
@@ -161,7 +172,7 @@ function finder($from, $to, $type, $convertparam) {
 	);
 }
 
-//convert results to seconds, minutes, hours and years
+// convert results to seconds, minutes, hours and years
 function convertto($thedays, $thetype) {
 	if ($thetype != null) {
 		switch ($thetype) {

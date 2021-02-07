@@ -42,8 +42,8 @@ $uu = "http://" . $_SERVER ['HTTP_HOST'] . dirname ( $_SERVER ['SCRIPT_NAME'] );
 	<div class="container">
 		<h1>Simple test</h1>
 		<form method="get" action="index.php">
-			<input type="datetime-local" id="from" name="from"> <input
-				type="datetime-local" id="to" name="to"> <select class="form-select"
+			<input type="date" id="from" name="from"> <input
+				type="date" id="to" name="to"> <select class="form-select"
 				aria-label="Convert to" name="type" id="type">
 				<option selected>none</option>
 				<option value="seconds">Seconds</option>

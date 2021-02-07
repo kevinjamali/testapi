@@ -13,13 +13,13 @@ HTML test: index.php
 defined type: seconds, minutes, hours, years
 defined convertparam: days, weekdays, completeweeks
 
-'from' or 'to' examples:
-2012/11/26
+Suggested formats for 'from' and 'to' are 'ISO 8601 date' and 'RFC 2822'
+examples:
 2012-03-24 17:45:12
 24 March 2012 17:45:12
 11 Feb 2021 GMT
 
-Please don't use d m Y format like: 26/11/2020
+you can use m/d/Y format like 2012/11/26 but Please don't use d/m/Y format like: 26/11/2020
 
 ##Time Zone
 
