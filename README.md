@@ -16,7 +16,7 @@ Call index.php with **POST** or **GET** method
 * allowed type: seconds, minutes, hours, years
 * allowed convertparam: days, weekdays, completeweeks
 
-Suggested formats for **from** and **to** are **ISO 8601 date** and **RFC 2822**
+Suggested formats for **from** and **to** are **ISO 8601 date** and **RFC 2822** 
 
 examples:
 * 2012-03-24 17:45:12
