@@ -1,13 +1,13 @@
 # Test Api
 This is just a  date time test API has been written in PHP to calculate dyas, weekdays and complete week between 2 date 
 
-##Install
+## Install
 
 There is no install and you can use it by testapi.php in a PHP ready Linux or Windows server
 API file: index.php
 HTML test: test.php 
 
-##Usage
+### Usage
 /index.php?from=strat_date-time&to=end_datetime&type=one_of_4_defined_types&convertparam=one_of_3_defined
 
 allowed type: seconds, minutes, hours, years
@@ -21,7 +21,7 @@ examples:
 
 you can use m/d/Y format like 2012/11/26 but Please don't use d/m/Y format like: 26/11/2020
 
-##Time Zone
+## Time Zone
 
 Please use standard timezone from this list: https://www.php.net/manual/en/timezones.php at the end of date-time for 'from' and 'to'
 
