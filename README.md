@@ -1,25 +1,28 @@
-# Test Api
-This is just a  date time test API has been written in PHP to calculate dyas, weekdays and complete week between 2 date 
+# Test API 
+This is a date-time Test API that has been written in PHP to calculate days, weekdays and complete weeks between 2 dates
 
 ## Install
 
-There is no install and you can use it by testapi.php in a PHP ready Linux or Windows server
+No install is needed and you can use it by putting **index.php** and **_functions.php** in a PHP-ready **Linux** or Windows server
 API file: index.php
 HTML test: test.php 
 
 ### Usage
-/index.php?from=strat_date-time&to=end_datetime&type=one_of_4_defined_types&convertparam=one_of_3_defined
+Call index.php with **POST** or **GET** method
 
-allowed type: seconds, minutes, hours, years
-allowed convertparam: days, weekdays, completeweeks
+> /index.php?from=strat_date-time&to=end_datetime&type=one_of_4_defined_types&convertparam=one_of_3_defined
 
-Suggested formats for 'from' and 'to' are 'ISO 8601 date' and 'RFC 2822'
+* allowed type: seconds, minutes, hours, years
+* allowed convertparam: days, weekdays, completeweeks
+
+Suggested formats for **from** and **to** are **ISO 8601 date** and **RFC 2822**
+
 examples:
-2012-03-24 17:45:12
-24 March 2012 17:45:12
-11 Feb 2021 GMT
+* 2012-03-24 17:45:12
+* 24 March 2012 17:45:12
+* 11 Feb 2021 GMT
 
-you can use m/d/Y format like 2012/11/26 but Please don't use d/m/Y format like: 26/11/2020
+You can use m/d/Y format like 2012/11/26 but please don't use d/m/Y format like 26/11/2020 
 
 ## Time Zone
 
