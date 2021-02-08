@@ -3,7 +3,8 @@ This is a date-time Test API that has been written in PHP to calculate days, wee
 
 ## Install
 
-No install is needed and you can use it by putting **index.php** and **_functions.php** in a PHP-ready **Linux** or Windows server
+No installation is needed. You can use it by putting **index.php** and **_functions.php** in a PHP-ready folder on a **Linux** or Windows server.
+
 API file: index.php
 HTML test: test.php 
 

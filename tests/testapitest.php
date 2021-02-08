@@ -17,4 +17,14 @@ class testapitest extends TestCase {
 		$this->assertTrue(arrays_are_similar($testArray2,$functionArray2 ));
 		
 	}
+	
+	public function testConvetTo() {
+		
+		$this->assertEquals(86400, convertto(1,"seconds"));
+		$this->assertEquals(1440, convertto(1,"minutes"));
+		$this->assertEquals(24, convertto(1,"hours"));
+		$this->assertEqualsWithDelta(0.002739, convertto(1,"years"), 0.0001);
+		
+		;
+	}
 }

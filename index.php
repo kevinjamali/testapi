@@ -1,8 +1,8 @@
 <?php
-use PhpParser\Node\Stmt\Switch_;
-include '_functions.php';
-header ( "Content-Type: application/json; charset=UTF-8" );
-
+use PhpParser\Node\Stmt\Switch_;//to simplify static code analysis and manipulation
+include '_functions.php'; //all calculations are here 
+header ( "Content-Type: application/json; charset=UTF-8" ); //to JSON response
+//Declaring the variables
 $from = null;
 $to = null;
 $type = null;
@@ -37,7 +37,7 @@ if (isset ( $_POST ["type"] )) {
 if (isset ( $_POST ["convertparam"] )) {
 	$convertparam = strtolower ( trim ( $_POST ["convertparam"] ) );
 }
-
+// encode the response array to  JSON
 $myJSON = json_encode ( finder ( $from, $to, $type, $convertparam ) );
 echo $myJSON;
 
