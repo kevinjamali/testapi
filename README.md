@@ -1,17 +1,17 @@
 # Test Api
-This is just a test api has been written in PHP
+This is just a  date time test API has been written in PHP to calculate dyas, weekdays and complete week between 2 date 
 
 ##Install
 
 There is no install and you can use it by testapi.php in a PHP ready Linux or Windows server
-API file: tespapi.php
-HTML test: index.php 
+API file: index.php
+HTML test: test.php 
 
 ##Usage
-/testapi.php?from=strat_date-time&to=end_datetime&type=one_of_4_defined_types&convertparam=one_of_3_defined
+/index.php?from=strat_date-time&to=end_datetime&type=one_of_4_defined_types&convertparam=one_of_3_defined
 
-defined type: seconds, minutes, hours, years
-defined convertparam: days, weekdays, completeweeks
+allowed type: seconds, minutes, hours, years
+allowed convertparam: days, weekdays, completeweeks
 
 Suggested formats for 'from' and 'to' are 'ISO 8601 date' and 'RFC 2822'
 examples:
